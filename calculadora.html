@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: Arial;
+        }
+
+        .fundo {
+            height: 100vb;
+            background-color: #bbb;
+            color: white;
+        }
+
+        .calculadora {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            border: 2px solid #ededed;
+            border-radius: 50px;
+            max-width: 210px;
+            background-color: #000000;
+            padding: 20px;
+            padding-top: 70px;
+        }
+
+        button {
+            border-radius: 100px;
+            height: 50px;
+            width: 50px;
+            font-size: 17px;
+            border: 0px;
+        }
+
+        .rgh {
+            color: white;
+            background-color: #fc9f00;
+            cursor: pointer;
+        }
+
+        .up {
+            color: black;
+            background-color: #a0a0a0;
+            cursor: pointer;
+        }
+        
+        .btn {
+            color: white;
+            background-color: #313131;
+            cursor: pointer;
+        }
+
+        .resultado {
+            font-size: 2rem;
+             text-align: right;
+            color: #d2d2d2;
+            padding-bottom: 6px;
+            padding-right: 6px;
+            max-width: 200px; /* Limita a largura máxima */
+            overflow: hidden; /* Esconde o texto que ultrapassar a largura */
+            white-space: nowrap; /* Impede que o texto vá para várias linhas */
+            text-overflow: ellipsis; /* Adiciona "..." quando o texto ultrapassar a largura */
+        }
+
+
+        /*----Hover Styles----*/
+
+        button:hover {
+            transform: translate(-0.2px, -0.2px);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fundo">
+        <footer>made by fontes :p</footer>
+        <div class="calculadora">
+            <p id="resultado" class="resultado"></p>
+            <table>
+                <tr>
+                    <td><button class="up" onclick="Clear()">C</button></td>
+                    <td><button class="up" onclick="back()"><</button></td>
+                    <td><button class="up" onclick="insert('/')">/</button></td>
+                    <td><button class="up" onclick="insert('*')">x</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn" onclick="insert('7')">7</button></td>
+                    <td><button class="btn" onclick="insert('8')">8</button></td>
+                    <td><button class="btn" onclick="insert('9')">9</button></td>
+                    <td><button class="rgh" onclick="insert('-')">-</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn" onclick="insert('4')">4</button></td>
+                    <td><button class="btn" onclick="insert('5')">5</button></td>
+                    <td><button class="btn" onclick="insert('6')">6</button></td>
+                    <td><button class="rgh" onclick="insert('+')">+</button></td>
+                </tr>
+                <tr>
+                    <td><button class="btn" onclick="insert('1')">1</button></td>
+                    <td><button class="btn" onclick="insert('2')">2</button></td>
+                    <td><button class="btn" onclick="insert('3')">3</button></td>
+                    <td rowspan="2"><button class="rgh" style="height: 106px;" onclick="calcular()">=</button></td>
+                </tr>
+                <tr>
+                    <td colspan="2"><button class="btn" style="width: 106px;" onclick="insert('0')">0</button></td>
+                    <td><button class="btn" onclick="insert('.')">.</button></td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <script>
+function insert(num) {
+    var numero = document.getElementById('resultado').innerHTML;
+    var resultadoElement = document.getElementById('resultado');
+    resultadoElement.innerHTML = numero + num;
+
+    // Ajustar o tamanho da fonte com base no número de caracteres
+    adjustFontSize();
+}
+
+function adjustFontSize() {
+    var resultadoElement = document.getElementById('resultado');
+    var length = resultadoElement.innerHTML.length;
+
+    // Aumenta ou diminui o tamanho da fonte conforme o comprimento do texto
+    if (length > 12) {
+        resultadoElement.style.fontSize = "1.5rem"; // Menor fonte
+    } else if (length > 8) {
+        resultadoElement.style.fontSize = "1.8rem"; // Tamanho médio
+    } else {
+        resultadoElement.style.fontSize = "2rem"; // Fonte normal
+    }
+}
+
+
+        function Clear()
+        {
+            document.getElementById('resultado').innerHTML = "";
+        
+
+        }
+
+        function back()
+        {
+            var resultado = document.getElementById('resultado').innerHTML;
+            document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1);
+        }
+
+        function calcular()
+        {
+            var resultado = document.getElementById('resultado').innerHTML;
+            if(resultado)
+        {
+            document.getElementById('resultado').innerHTML = eval(resultado);
+        }
+        else
+        {
+            document.getElementById('resultado').innerHTML = "Você não digitou nada."
+        }
+        }
+    </script>
+</body>
+
+</html>
