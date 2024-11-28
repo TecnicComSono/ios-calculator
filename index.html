@@ -121,11 +121,14 @@
             var numero = document.getElementById('resultado').innerHTML;
             var resultadoElement = document.getElementById('resultado');
 
-            // Remover espaços indesejados e garantir que números e operadores sejam combinados sem espaços
+            // Remover espaços e garantir que não se insira espaços desnecessários
             if (numero === "0") {
                 resultadoElement.innerHTML = num;
             } else {
-                // Se o número ou operador for válido, adiciona sem espaço
+                // Verifica se o último caractere inserido é um operador ou não, para evitar espaço ou repetição de operadores
+                if (['+', '-', '*', '/'].includes(numero[numero.length - 1]) && ['+', '-', '*', '/'].includes(num)) {
+                    return; // Não insere o operador se o último caractere for também um operador
+                }
                 resultadoElement.innerHTML = numero + num;
             }
 
