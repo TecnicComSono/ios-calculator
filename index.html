@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Calculadora</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
         }
 
         .fundo {
-            height: 100vb;
+            height: 100vh;
             background-color: #bbb;
             color: white;
         }
@@ -50,7 +50,7 @@
             background-color: #a0a0a0;
             cursor: pointer;
         }
-        
+
         .btn {
             color: white;
             background-color: #313131;
@@ -59,18 +59,15 @@
 
         .resultado {
             font-size: 2rem;
-             text-align: right;
+            text-align: right;
             color: #d2d2d2;
             padding-bottom: 6px;
             padding-right: 6px;
-            max-width: 200px; /* Limita a largura máxima */
-            overflow: hidden; /* Esconde o texto que ultrapassar a largura */
-            white-space: nowrap; /* Impede que o texto vá para várias linhas */
-            text-overflow: ellipsis; /* Adiciona "..." quando o texto ultrapassar a largura */
+            max-width: 200px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
-
-
-        /*----Hover Styles----*/
 
         button:hover {
             transform: translate(-0.2px, -0.2px);
@@ -80,9 +77,8 @@
 
 <body>
     <div class="fundo">
-        <footer>made by fontes :p</footer>
         <div class="calculadora">
-            <p id="resultado" class="resultado"></p>
+            <p id="resultado" class="resultado">0</p>
             <table>
                 <tr>
                     <td><button class="up" onclick="Clear()">C</button></td>
@@ -116,54 +112,68 @@
         </div>
     </div>
     <script>
-function insert(num) {
-    var numero = document.getElementById('resultado').innerHTML;
-    var resultadoElement = document.getElementById('resultado');
-    resultadoElement.innerHTML = numero + num;
+        window.onload = function() {
+            // Inicia com "0" no resultado
+            document.getElementById('resultado').innerHTML = "0";
+        };
 
-    // Ajustar o tamanho da fonte com base no número de caracteres
-    adjustFontSize();
-}
+        function insert(num) {
+            var numero = document.getElementById('resultado').innerHTML;
+            var resultadoElement = document.getElementById('resultado');
 
-function adjustFontSize() {
-    var resultadoElement = document.getElementById('resultado');
-    var length = resultadoElement.innerHTML.length;
+            // Remover espaços indesejados e garantir que números e operadores sejam combinados sem espaços
+            if (numero === "0") {
+                resultadoElement.innerHTML = num;
+            } else {
+                // Se o número ou operador for válido, adiciona sem espaço
+                resultadoElement.innerHTML = numero + num;
+            }
 
-    // Aumenta ou diminui o tamanho da fonte conforme o comprimento do texto
-    if (length > 12) {
-        resultadoElement.style.fontSize = "1.5rem"; // Menor fonte
-    } else if (length > 8) {
-        resultadoElement.style.fontSize = "1.8rem"; // Tamanho médio
-    } else {
-        resultadoElement.style.fontSize = "2rem"; // Fonte normal
-    }
-}
-
-
-        function Clear()
-        {
-            document.getElementById('resultado').innerHTML = "";
-        
-
+            // Ajustar o tamanho da fonte com base no número de caracteres
+            adjustFontSize();
         }
 
-        function back()
-        {
+        function adjustFontSize() {
+            var resultadoElement = document.getElementById('resultado');
+            var length = resultadoElement.innerHTML.length;
+
+            // Aumenta ou diminui o tamanho da fonte conforme o comprimento do texto
+            if (length > 12) {
+                resultadoElement.style.fontSize = "1.5rem"; // Menor fonte
+            } else if (length > 8) {
+                resultadoElement.style.fontSize = "1.8rem"; // Tamanho médio
+            } else {
+                resultadoElement.style.fontSize = "2rem"; // Fonte normal
+            }
+        }
+
+        function Clear() {
+            document.getElementById('resultado').innerHTML = "0";
+        }
+
+        function back() {
             var resultado = document.getElementById('resultado').innerHTML;
-            document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length -1);
+            // Se for apenas "0", não faz nada
+            if (resultado.length > 1) {
+                document.getElementById('resultado').innerHTML = resultado.substring(0, resultado.length - 1);
+            } else {
+                document.getElementById('resultado').innerHTML = "0";
+            }
         }
 
-        function calcular()
-        {
+        function calcular() {
             var resultado = document.getElementById('resultado').innerHTML;
-            if(resultado)
-        {
-            document.getElementById('resultado').innerHTML = eval(resultado);
-        }
-        else
-        {
-            document.getElementById('resultado').innerHTML = "Você não digitou nada."
-        }
+            // Se o valor não for "0", realiza o cálculo
+            if (resultado && resultado !== "0") {
+                try {
+                    // Avalia a expressão sem espaços extras
+                    document.getElementById('resultado').innerHTML = eval(resultado.replace(/\s+/g, ''));
+                } catch (e) {
+                    document.getElementById('resultado').innerHTML = "Erro";
+                }
+            } else {
+                document.getElementById('resultado').innerHTML = "Digite algo!";
+            }
         }
     </script>
 </body>
