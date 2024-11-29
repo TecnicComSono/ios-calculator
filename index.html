@@ -117,20 +117,25 @@
             document.getElementById('resultado').innerHTML = "0";
         };
 
-        function insert(num) {
-            var numero = document.getElementById('resultado').innerHTML;
-            var resultadoElement = document.getElementById('resultado');
+function insert(num) {
+    const resultadoElement = document.getElementById('resultado');
+    let currentValue = resultadoElement.innerHTML;
 
-            // Remover espaços e garantir que não se insira espaços desnecessários
-            if (numero === "0") {
-                resultadoElement.innerHTML = num;
-            } else {
-                // Verifica se o último caractere inserido é um operador ou não, para evitar espaço ou repetição de operadores
-                if (['+', '-', '*', '/'].includes(numero[numero.length - 1]) && ['+', '-', '*', '/'].includes(num)) {
-                    return; // Não insere o operador se o último caractere for também um operador
-                }
-                resultadoElement.innerHTML = numero + num;
-            }
+    // Verifica se o número atual é "0" e substitui pelo novo número
+    if (currentValue === "0") {
+        currentValue = ""; // Remove o "0" inicial
+    }
+
+    // Verifica e remove espaços extras antes de concatenar
+    currentValue = currentValue.replace(/\s+/g, '');
+
+    // Atualiza o display com o novo número
+    resultadoElement.innerHTML = currentValue + num;
+
+    // Ajusta o tamanho da fonte
+    adjustFontSize();
+}
+
 
             // Ajustar o tamanho da fonte com base no número de caracteres
             adjustFontSize();
